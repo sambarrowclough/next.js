@@ -89,7 +89,11 @@ function formatMessage(message) {
       lines[0],
       lines[1]
         .replace('Error: ', '')
-        .replace('Module not found: Cannot find file:', 'Cannot find file:'),
+        .replace('Module not found: Cannot find file:', 'Cannot find file:')
+        .replace(
+          /^.*Module not found: Can't resolve '(.+?)' in '(.+?)'.*$/gm,
+          `Module '$1' in '$2' does not exist. Its possible you are trying to import a module that starts with a lower-case letter, when it needs to be upper-case.`
+        ),
       ...lines.slice(2).filter((line) => line.indexOf(' @ ') !== 0),
     ]
   }
